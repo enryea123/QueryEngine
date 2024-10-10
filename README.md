@@ -46,12 +46,12 @@ alphanumeric). Having the schema beforehand would help speed up this step, by re
 
 ### Query Filtering
 
-In the filtering part, I've decided to override the behavior of the given operators (`=`, `>`), to allow
+In the filtering part, I've decided to override the behavior of the given operators (`=`, `>`, `<`), to allow
 more control and extensibility in the future. I could have alternatively just compared the results (e.g. `===`),
 but for a query engine I feel the operators should have a broader, more robust definition, especially if more
 data types that could be added in the future.
 
-Adding new comparison operators (e.g. `<`) is straightforward. However, adding a sorting operator would
+Adding new operators (e.g. `!=`) is straightforward. However, adding a sorting operator would
 require more time to implement. For the sorting, we could use a built-in `sort` function and use a lambda to
 determine the column to use for the sorting, something like: `data.sort((a, b) => (a.col1 < b.col1 ? -1 : 1))`.
 

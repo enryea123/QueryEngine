@@ -93,7 +93,7 @@ describe('shouldKeepRow', () => {
     it('should return false for greater filter with different types comparison', () => {
         const row: DataRow = { col1: 'value1', col2: 42 };
         const filter: QueryFilter = {
-            column: 'col1',
+            column: 'col2',
             operator: QueryOperator.GREATER,
             value: 'value2',
         };
@@ -106,6 +106,74 @@ describe('shouldKeepRow', () => {
         const filter: QueryFilter = {
             column: 'col1',
             operator: QueryOperator.GREATER,
+            value: 'someValue',
+        };
+
+        expect(() => shouldKeepRow(row, filter)).toThrow(
+            'Cannot compare values of unsupported types'
+        );
+    });
+
+    it('should return true for smaller filter with numeric comparison', () => {
+        const row: DataRow = { col1: 'value1', col2: 39 };
+        const filter: QueryFilter = {
+            column: 'col2',
+            operator: QueryOperator.SMALLER,
+            value: '40',
+        };
+        const result = shouldKeepRow(row, filter);
+        expect(result).toBe(true);
+    });
+
+    it('should return false for smaller filter with numeric comparison', () => {
+        const row: DataRow = { col1: 'value1', col2: 42 };
+        const filter: QueryFilter = {
+            column: 'col2',
+            operator: QueryOperator.SMALLER,
+            value: '40',
+        };
+        const result = shouldKeepRow(row, filter);
+        expect(result).toBe(false);
+    });
+
+    it('should return true for smaller filter with string comparison', () => {
+        const row: DataRow = { col1: 'value1', col2: 'value1' };
+        const filter: QueryFilter = {
+            column: 'col1',
+            operator: QueryOperator.SMALLER,
+            value: 'value2',
+        };
+        const result = shouldKeepRow(row, filter);
+        expect(result).toBe(true);
+    });
+
+    it('should return false for smaller filter with string comparison', () => {
+        const row: DataRow = { col1: 'value2', col2: 'value2' };
+        const filter: QueryFilter = {
+            column: 'col1',
+            operator: QueryOperator.SMALLER,
+            value: 'value1',
+        };
+        const result = shouldKeepRow(row, filter);
+        expect(result).toBe(false);
+    });
+
+    it('should return false for smaller filter with different types comparison', () => {
+        const row: DataRow = { col1: 'value1', col2: 42 };
+        const filter: QueryFilter = {
+            column: 'col2',
+            operator: QueryOperator.SMALLER,
+            value: 'value2',
+        };
+        const result = shouldKeepRow(row, filter);
+        expect(result).toBe(false);
+    });
+
+    it('should throw an error for smaller filter with unsupported types', () => {
+        const row: DataRow = { col1: true as unknown as ColumnValue };
+        const filter: QueryFilter = {
+            column: 'col1',
+            operator: QueryOperator.SMALLER,
             value: 'someValue',
         };
 

@@ -1,6 +1,7 @@
 export enum QueryOperator {
     EQUAL = '=',
     GREATER = '>',
+    SMALLER = '<',
 }
 
 export interface QueryFilter {

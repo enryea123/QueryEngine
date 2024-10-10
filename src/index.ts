@@ -21,11 +21,13 @@ import { queryRunner } from './query/runner';
         'PROJECT id, fruit FILTER quantity > 7',
         'PROJECT id, fruit, year FILTER quantity > 7',
         'PROJECT id, fruit, year FILTER quantity > 77',
+        'PROJECT id, fruit, year FILTER quantity < 10',
         'PROJECT id, fruit, year, quantity FILTER id = "222"',
         'PROJECT id, fruit, year, quantity FILTER id = 222',
         'PROJECT id, fruit, year FILTER id = "4bc"',
         'PROJECT id, fruit, year FILTER id = 4bc',
         'PROJECT id, fruit, year FILTER id > 1',
+        'PROJECT id, fruit, year FILTER id < 4bc',
         'PROJECT id, fruit, year, quantity',
         'PROJECT id, fruit',
     ];
